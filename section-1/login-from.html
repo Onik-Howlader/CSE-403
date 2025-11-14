@@ -1,11 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login Form Validation</title>
+    <style>
+        body {
+            font-family: Arial;
+            width: 380px;
+            margin:50px auto;
+        }
+        form{
+            border: 2px solid black;
+            padding: 50px;
+            border-radius: 8px;
+        }
+        h2{
+            border: 2px solid black;
+            border-radius: 8px;
+            text-align: center;
+            padding: 5px 0;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            border-radius: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background: blue;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 16px;
+            margin-left: 100px;          
+        }
+        .error {
+            color: red;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
-    
+
+    <h2>Login Form</h2>
+    <div class="error" id="error"></div>
+    <form onsubmit="return validateForm()">
+        <label>Username:</label><br>
+        <input type="text" id="username">
+
+        <label>Password:</label><br>
+        <input type="password" id="password">
+
+        <label>Phone Number:</label><br>
+        <input type="text" id="phone">
+
+        <button type="submit">Login</button>
+
+    </form>
+
+    <script>
+        function validateForm() {
+            let username = document.getElementById("username").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let error = "";
+            // Check empty fields
+            if (username === "" || password === "" || phone === "") {
+                error = "All fields must not be blank!";
+                document.getElementById("error").innerHTML = error;
+                return false;
+            }
+            // Username should not start with _, @ or number
+            if (/^[_@0-9]/.test(username)) {
+                error = "Username should not start with _ , @ or a number!";
+                document.getElementById("error").innerHTML = error;
+                return false;
+            }
+            // Password length validation
+            if (password.length < 6 || password.length > 12) {
+                error = "Password length must be 6 to 12 characters!";
+                document.getElementById("error").innerHTML = error;
+                return false;
+            }
+            // Phone number validation (017/018/019/015 + 11 digits)
+            if (!/^(017|018|019|015)\d{8}$/.test(phone)) {
+                error = "Phone number must be 11 digits and start with 017/018/019/015!";
+                document.getElementById("error").innerHTML = error;
+                return false;
+            }
+            // If all ok
+            alert("Login Successful!");
+            return true;
+        }
+    </script>
+
 </body>
+
 </html>
