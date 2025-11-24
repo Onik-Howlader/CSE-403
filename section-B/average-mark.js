@@ -1,55 +1,40 @@
-// Sample data: Array of student marks (0 to 100)
-const studentMarks = [85, 92, 78, 65, 98, 70, 55, 88];
+function calculateGrade(marks) {
+  if (!Array.isArray(marks) || marks.length === 0) {
+    return "Please provide a valid list of marks.";
+  }
 
-/**
- * Calculates the average of an array of marks.
- * @param {number[]} marksArray - Array of student marks
- * @returns {number} - Average mark
- */
-function calculateAverage(marksArray) {
-    if (marksArray.length === 0) {
-        return 0;
-    }
+  // Calculate the sum of marks
+  let sum = 0;
+  for (let i = 0; i < marks.length; i++) {
+    sum += marks[i];
+  }
 
-    // 1. Calculate the sum of all marks
-    const totalSum = marksArray.reduce((sum, mark) => sum + mark, 0);
+  // Calculate the average
+  const average = sum / marks.length;
+  let grade = "";
 
-    // 2. Calculate the average
-    const average = totalSum / marksArray.length;
+  // Determine the grade based on the average
+  if (average >= 90) {
+    grade = "A";
+  } else if (average >= 80) {
+    grade = "B";
+  } else if (average >= 70) {
+    grade = "C";
+  } else if (average >= 60) {
+    grade = "D";
+  } else {
+    grade = "F";
+  }
 
-    return average;
+  // Return a summary string
+  return `The average mark is ${average.toFixed(
+    2
+  )}. The corresponding grade is ${grade}.`;
 }
 
-/**
- * Determines the grade based on the average mark.
- * @param {number} average - The calculated average mark
- * @returns {string} - Grade description
- */
-function determineGrade(average) {
-    let grade = "";
+// Example Usage:
+const studentMarks1 = [85, 92, 78, 65, 95];
+console.log(calculateGrade(studentMarks1)); // Output: The average mark is 83.00. The corresponding grade is B.
 
-    // Define the grading scale
-    if (average >= 90) {
-        grade = "A (Excellent)";
-    } else if (average >= 80) {
-        grade = "B (Good)";
-    } else if (average >= 70) {
-        grade = "C (Satisfactory)";
-    } else if (average >= 60) {
-        grade = "D (Needs Improvement)";
-    } else {
-        grade = "F (Fail)";
-    }
-
-    return grade;
-}
-
-// Main execution
-const averageMark = calculateAverage(studentMarks);
-const finalGrade = determineGrade(averageMark);
-
-console.log(`--- Student Grade Program ---`);
-console.log(`Student Marks: [${studentMarks.join(', ')}]`);
-console.log(`Total Students: ${studentMarks.length}`);
-console.log(`Calculated Average Mark: ${averageMark.toFixed(2)}`);
-console.log(`Corresponding Grade: ${finalGrade}`);
+const studentMarks2 = [55, 62, 48, 58, 65];
+console.log(calculateGrade(studentMarks2)); // Output: The average mark is 57.60. The corresponding grade is F.
